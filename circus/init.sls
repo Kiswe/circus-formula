@@ -21,7 +21,9 @@ circus-init-script:
 
 circus:
   pip.installed:
-    - pkgs: pyzmq circus
+    - pkgs:
+      - pyzmq 
+      - circus
     - require:
       - pkg: circus-dependencies
   service:

@@ -37,6 +37,7 @@ circus:
     - pkgs:
       - pyzmq 
       - circus
+      - circus-web
     - require:
       - pkg: circus-dependencies
   service:

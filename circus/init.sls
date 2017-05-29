@@ -14,11 +14,6 @@ circus-dependencies:
       - python-dev
 
 circus-init-script:
-  file.managed:
-    - name: /etc/init.d/circus
-    - source: salt://circus/templates/init.sh.tmpl
-    - template: jinja
-    - mode: 0755
   {% if use_upstart %}
   file.managed:
     - name: /etc/init/circus.conf
@@ -29,6 +24,12 @@ circus-init-script:
     - source: salt://circus/templates/upstart.jinja
     - require:
       - pip: circus
+  {%- else %}
+  file.managed:
+    - name: /etc/init.d/circus
+    - source: salt://circus/templates/init.sh.tmpl
+    - template: jinja
+    - mode: 0755
   {% endif %}
 
 circus:

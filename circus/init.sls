@@ -19,6 +19,17 @@ circus-init-script:
     - source: salt://circus/templates/init.sh.tmpl
     - template: jinja
     - mode: 0755
+  {% if use_upstart %}
+  file.managed:
+    - name: /etc/init/circus.conf
+    - template: jinja
+    - user: root
+    - group: root
+    - mode: 440
+    - source: salt://circus/templates/upstart.jinja
+    - require:
+      - pip: circus
+  {% endif %}
 
 circus:
   pip.installed:
@@ -36,14 +47,4 @@ circus:
       - file: {{ circus.conf_dir }}/circus.ini
       - file: circus-init-script
       - pip: circus
-  {% if use_upstart %}
-  file.managed:
-    - name: /etc/init/circus.conf
-    - template: jinja
-    - user: root
-    - group: root
-    - mode: 440
-    - source: salt://circus/templates/upstart.jinja
-    - require:
-      - pip: circus
-  {% endif %}
+

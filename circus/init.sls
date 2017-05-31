@@ -35,9 +35,9 @@ circus-init-script:
 circus:
   pip.installed:
     - pkgs:
-      - pyzmq 
+      - pyzmq
       - circus
-      - circus-web
+      - https://github.com/circus-tent/circus-web/archive/master.zip
     - require:
       - pkg: circus-dependencies
   service:
@@ -49,4 +49,3 @@ circus:
       - file: {{ circus.conf_dir }}/circus.ini
       - file: circus-init-script
       - pip: circus
-
